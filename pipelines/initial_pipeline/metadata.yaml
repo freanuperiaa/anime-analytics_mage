@@ -35,7 +35,8 @@ blocks:
 - all_upstream_blocks_executed: false
   color: null
   configuration: {}
-  downstream_blocks: []
+  downstream_blocks:
+  - initial_load_users_data
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -48,7 +49,7 @@ blocks:
   upstream_blocks:
   - initial_load_anime_transformer
   uuid: initial_load_anime_load
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
   color: null
   configuration: {}
   downstream_blocks:
@@ -62,9 +63,44 @@ blocks:
   status: executed
   timeout: null
   type: data_loader
-  upstream_blocks: []
+  upstream_blocks:
+  - initial_load_anime_load
   uuid: initial_load_users_data
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - initial_load_user_load
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: initial_load_users_transformer
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - initial_load_users_data
+  uuid: initial_load_users_transformer
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - initial_load_ratings
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: initial_load_user_load
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - initial_load_users_transformer
+  uuid: initial_load_user_load
+- all_upstream_blocks_executed: false
   color: null
   configuration: {}
   downstream_blocks: []
@@ -72,14 +108,14 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: initial_load_users_transformer
+  name: initial_load_ratings
   retry_config: null
   status: updated
   timeout: null
-  type: transformer
+  type: data_loader
   upstream_blocks:
-  - initial_load_users_data
-  uuid: initial_load_users_transformer
+  - initial_load_user_load
+  uuid: initial_load_ratings
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
