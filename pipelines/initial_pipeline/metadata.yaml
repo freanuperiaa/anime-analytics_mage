@@ -26,13 +26,13 @@ blocks:
   language: python
   name: initial_load_anime_transformer
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: transformer
   upstream_blocks:
   - initial_load_anime_data
   uuid: initial_load_anime_transformer
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
@@ -49,7 +49,7 @@ blocks:
   upstream_blocks:
   - initial_load_anime_transformer
   uuid: initial_load_anime_load
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
@@ -66,7 +66,7 @@ blocks:
   upstream_blocks:
   - initial_load_anime_load
   uuid: initial_load_users_data
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
@@ -83,7 +83,7 @@ blocks:
   upstream_blocks:
   - initial_load_users_data
   uuid: initial_load_users_transformer
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
@@ -100,7 +100,42 @@ blocks:
   upstream_blocks:
   - initial_load_users_transformer
   uuid: initial_load_user_load
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - iniital_load_ratings_transformer
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: initial_load_ratings
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - initial_load_user_load
+  uuid: initial_load_ratings
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - initial_load_ratings_load
+  - initial_load_ratings_parquet
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: iniital_load_ratings_transformer
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - initial_load_ratings
+  uuid: iniital_load_ratings_transformer
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -108,14 +143,30 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: initial_load_ratings
+  name: initial_load_ratings_load
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
-  type: data_loader
+  type: data_exporter
   upstream_blocks:
-  - initial_load_user_load
-  uuid: initial_load_ratings
+  - iniital_load_ratings_transformer
+  uuid: initial_load_ratings_load
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: initial_load_ratings_parquet
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - iniital_load_ratings_transformer
+  uuid: initial_load_ratings_parquet
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
