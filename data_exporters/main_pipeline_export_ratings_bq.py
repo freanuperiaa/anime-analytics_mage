@@ -22,7 +22,7 @@ def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
-    df = df.iloc[:1000001]
+    df = df.iloc[:1000000]
 
     BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).export(
         df,

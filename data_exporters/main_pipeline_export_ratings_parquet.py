@@ -23,7 +23,7 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
     object_key = 'datastore/ratings.parquet'
 
     # slice the dataset
-    df = df.iloc[1000001:]
+    df = df.iloc[1000000:]
 
     GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(
         df,
