@@ -19,8 +19,11 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
-    bucket_name = 'test-anime-bucket'
-    object_key = 'taxi_data.parquet'
+    bucket_name = 'fperia-anime-bucket'
+    object_key = 'datastore/ratings.parquet'
+
+    # slice the dataset
+    df = df.iloc[1000001:]
 
     GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(
         df,

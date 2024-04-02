@@ -10,20 +10,22 @@ if 'data_exporter' not in globals():
 
 @data_exporter
 def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
+    """
+    Template for exporting data to a BigQuery warehouse.
+    Specify your configuration settings in 'io_config.yaml'.
 
-    table_id = 'anime-analytics-418714.test_mage_ny_taxi.yellow_cab_data'
+    Docs: https://docs.mage.ai/design/data-loading#bigquery
+    """
+
+
+    table_id = 'anime-analytics-418714.anime_analytics.ratings'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
-    # let's just cut the number of rows for now
-    # df = df.iloc[:50000]
-    # removed limit
-    print('starting loading to bigquery...')
+    df = df.iloc[:1000001]
 
     BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).export(
         df,
         table_id,
-        if_exists='replace',  # Specify resolution policy if table name already exists
+        if_exists='append',  # Specify resolution policy if table name already exists
     )
-
-    print('done loading to bigquery!')
